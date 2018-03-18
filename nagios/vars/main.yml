@@ -1,0 +1,17 @@
+---
+packages:
+   - build-essential
+   - libgd2-xpm-dev
+   - openssl
+   - libssl-dev
+   - xinetd
+   - apache2-utils
+   - apache2
+   - unzip
+nagios_url: https://assets.nagios.com/downloads/nagioscore/releases/nagios-4.1.1.tar.gz
+nagios_plugin_url: http://nagios-plugins.org/download/nagios-plugins-2.1.1.tar.gz
+nrpe_url: http://downloads.sourceforge.net/project/nagios/nrpe-2.x/nrpe-2.15/nrpe-2.15.tar.gz
+nagios_home: /root/nagios-4.1.1
+nagios_plugin_home: /root/nagios-plugins-2.1.1
+nagios_nrpe_home: /root/nrpe-2.15
+ip: 54.174.98.165

@@ -1,0 +1,35 @@
+---
+- name: Download nrpe plugin
+  get_url:
+    url: "{{ nrpe_url }}"
+    dest: /root
+- name: untar the nagios
+  command: tar xvf /root/nrpe-2.15.tar.gz
+- name: configure Nrpe
+  command: ./configure --enable-command-args --with-nagios-user=nagios --with-nagios-group=nagios --with-ssl=/usr/bin/openssl --with-ssl-lib=/usr/lib/x86_64-linux-gnu
+  args:
+    chdir: "{{ nagios_nrpe_home }}"
+- name: make all the nrpe plugin
+  command: make all
+  args:
+    chdir: "{{ nagios_nrpe_home }}"
+- name: sudo make install the nrpe plugin
+  make: 
+    chdir: "{{ nagios_nrpe_home }}"
+    target: install
+- name: make all the nrpe plugin
+  command: make install-xinetd
+  args:
+    chdir: "{{ nagios_nrpe_home }}"
+- name: make all the nrpe plugin
+  command: make install-daemon-config
+  args:
+    chdir: "{{ nagios_nrpe_home }}"
+- name: add the nrpe nagios ip to config file
+  replace:
+    dest: /etc/xinetd.d/nrpe
+    regexp: '127.0.0.1'
+    replace: '{{ ip }}'
+    backup: yes
+- name: restart the xinetd service
+  service: name=xinetd state=restarted

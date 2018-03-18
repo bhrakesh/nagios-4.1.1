@@ -1,0 +1,39 @@
+---
+- name: Download nagios
+  get_url:
+    url: "{{ nagios_url }}"
+    dest: /root
+- name: untar the nagios
+  command: tar xvf /root/nagios-4.1.1.tar.gz
+- name: configure Nagios
+  command: './configure --with-nagios-group=nagios --with-command-group=nagcmd chdir=/root/nagios-4.1.1'
+- name: compile Nagios 
+  command: make all
+  args:
+    chdir: "{{ nagios_home }}"
+- name:  Make install Nagios
+  command: make install
+  args:
+    chdir: "{{ nagios_home }}"
+- name: make install-commandmode
+  command: make install-commandmode
+  args:
+    chdir: "{{ nagios_home }}"
+- name: make install-init
+  command: make install-init
+  args:
+    chdir: "{{ nagios_home }}"
+- name: make install-config nagios
+  command: make install-config
+  args:
+    chdir: "{{ nagios_home }}"
+- name: update nagios with apache config 
+  command: '/usr/bin/install -c -m 644 sample-config/httpd.conf /etc/apache2/sites-available/nagios.conf'
+  args:
+    chdir: "{{ nagios_home }}"
+- name: add nagios    
+  user:
+    name: www-data
+    groups: nagcmd
+    append: yes
+

@@ -1,0 +1,5 @@
+---
+- include: dependecy.yml
+- include: nagios.yml
+- include: nagios-plugin.yml 
+- include: nrpe.yml

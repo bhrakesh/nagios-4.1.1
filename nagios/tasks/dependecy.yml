@@ -1,0 +1,22 @@
+---
+- name: creating nagcmd group for nagios
+  group:
+    name: nagcmd
+    state: present
+- name: creating nagcmd group for nagios
+  group:
+    name: nagios
+    state: present
+- name: creating nagios user
+  user:
+    name: nagios
+    group: nagcmd
+- name: creating nagios user
+  user:
+    name: nagios
+    group: nagios
+- name: installing dependencies
+  apt: name={{ item }} state=present
+  with_items: "{{ packages }}"
+- name: Start the apache2 service
+  service: name=apache2 state=started
