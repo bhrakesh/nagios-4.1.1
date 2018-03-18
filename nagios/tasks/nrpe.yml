@@ -33,3 +33,50 @@
     backup: yes
 - name: restart the xinetd service
   service: name=xinetd state=restarted
+- name: Enable client servers folder in nagios config file
+  replace:
+    dest: /usr/local/nagios/etc/nagios.cfg
+    regexp: '#cfg_dir=/usr/local/nagios/etc/servers'
+    replace: 'cfg_dir=/usr/local/nagios/etc/servers'
+    backup: yes
+- name: create servers folder
+  file:
+    path: /usr/local/nagios/etc/servers
+    state: directory
+- name: update the nagios email address for notification
+  replace:
+    dest: /usr/local/nagios/etc/objects/contacts.cfg
+    regexp: 'nagios@localhost'
+    replace: '{{ email }}'
+    backup: yes
+- name: adding nrpe command to commands list
+  template:
+    src: commands.j2
+    dest: /usr/local/nagios/etc/objects/commands.cfg
+    owner: nagios
+    group: nagios
+    mode: 0644
+- name: install apache rewrite
+  command: a2enmod rewrite
+- name: enable cgi
+  command: a2enmod cgi
+#- name: create nagiosadmin password
+#  shell: htpasswd -cb /etc/nagios/passwd nagiosadmin { password }}
+- name: create a link file for nagios confgi file
+  file:
+    src: /etc/apache2/sites-available/nagios.conf
+    dest: /etc/apache2/sites-enabled/
+    state: link
+  notify:
+   - start the nagios
+   - start the apache   
+- name: nagios config file
+  template:
+    src: nagios.j2
+    dest: /etc/apache2/sites-available/nagios.conf
+    owner: root
+    group: root
+    mode: 0644
+  notify:
+   - start the nagios
+   - start the apache

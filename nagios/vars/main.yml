@@ -14,4 +14,7 @@ nrpe_url: http://downloads.sourceforge.net/project/nagios/nrpe-2.x/nrpe-2.15/nrp
 nagios_home: /root/nagios-4.1.1
 nagios_plugin_home: /root/nagios-plugins-2.1.1
 nagios_nrpe_home: /root/nrpe-2.15
-ip: 54.174.98.165
+ip: 54.164.16.208
+email: inforkvraju@gmail.com
+password: raju
+

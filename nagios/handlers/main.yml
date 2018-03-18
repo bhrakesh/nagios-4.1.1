@@ -1,0 +1,6 @@
+---
+- name: start the nagios
+  service: name=nagios state=restarted
+- name: start the apache
+  service: name=apache2 state=restarted
+
