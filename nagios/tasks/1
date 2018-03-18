@@ -1,8 +1,0 @@
----
-- name: Download nrpe plugin
-  get_url:
-    url: "{{ nrpe_url }}"
-    dest: /root
-- name: untar the nagios
-  command: tar xvf /root/nrpe-2.15.tar.gz
-
